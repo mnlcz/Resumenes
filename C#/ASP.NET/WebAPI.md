@@ -43,6 +43,9 @@
       - [`GET` mediante `id` existente](#get-mediante-id-existente)
       - [`GET` mediante `id` NO existente](#get-mediante-id-no-existente)
     - [`POST`](#post)
+    - [`PUT`](#put)
+      - [Verificando que se haya agregado correctamente](#verificando-que-se-haya-agregado-correctamente)
+    - [`DELETE`](#delete)
 
 # Crear el proyecto
 ```ps1
@@ -483,3 +486,61 @@ Transfer-Encoding: chunked
 ```
 
 ### `POST`
+```ps1
+post -c "{"name":"Hawaii", "isGlutenFree":false}"
+```
+Respuesta:
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json; charset=utf-8
+Date: Fri, 02 Apr 2021 23:23:09 GMT
+Location: https://localhost:{PORT}/Pizza?id=3
+Server: Kestrel
+Transfer-Encoding: chunked
+
+{
+    "id": 3,
+    "name": "Hawaii",
+    "isGlutenFree": false
+}
+```
+
+### `PUT`
+```ps1
+put 3 -c  "{"id": 3, "name":"Hawaiian", "isGlutenFree":false}"
+```
+Respuesta:
+```json
+HTTP/1.1 204 No Content
+Date: Fri, 02 Apr 2021 23:23:55 GMT
+Server: Kestrel
+```
+#### Verificando que se haya agregado correctamente
+```ps1
+get 3
+```
+Respuesta:
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Fri, 02 Apr 2021 23:27:37 GMT
+Server: Kestrel
+Transfer-Encoding: chunked
+
+{
+    "id": 3,
+    "name": "Hawaiian",
+    "isGlutenFree": false
+}
+```
+
+### `DELETE`
+```ps1
+delete 3
+```
+Respuesta:
+```json
+HTTP/1.1 204 No Content
+Date: Fri, 02 Apr 2021 23:30:04 GMT
+Server: Kestrel
+```
